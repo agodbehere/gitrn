@@ -64,7 +64,8 @@ def get_tag_ranges(repo):
         if len(elements) > 1:   # has timestamp, so use the tag
             tags.append(elements[0].split('/')[-1])   # actual tag name
 
-    tags = ['HEAD'] + tags
+    tags.append("HEAD")
+    print("TAGS: {}".format(tags))
     reversed_ranges = ['{0}..{1}'.format(tags[i - 1], tags[i]) for i in reversed(range(1, len(tags)))]
     return reversed_ranges
 
@@ -100,7 +101,7 @@ def parse_commits(repo, r):
 
 def group_by_tag(repo):
     ranges = get_tag_ranges(repo)
-    print(ranges)
+    print("RANGES: {}".format(ranges))
     latest_tag = ranges[0].split('..')[1]
     #ranges = [latest_tag + '..HEAD'] + ranges
     release_notes = []
@@ -125,7 +126,6 @@ def get_args():
 
 def run():
     args = get_args()
-    print(args)
 
     repo = git.Repo(".")  # current directory
 
@@ -139,8 +139,7 @@ def run():
         release_notes = []
 
     if args.console:
-        for rn in release_notes:
-            print(rn)
+        print(format_markdown(release_notes))
     else:
         with open("RELEASE_NOTES.md", 'w') as outfile:
             outfile.write(format_markdown(release_notes))
