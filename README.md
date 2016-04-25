@@ -1,13 +1,13 @@
 # gitrn
 
-.. image:: https://img.shields.io/pypi/v/with-venv.svg
-        :target: https://pypi.python.org/pypi/with-venv
+.. image:: https://img.shields.io/pypi/v/gitrn.svg
+        :target: https://pypi.python.org/pypi/gitrn
 
-.. image:: https://img.shields.io/travis/agodbehere/with-venv.svg
-        :target: https://travis-ci.org/agodbehere/with-venv
+.. image:: https://img.shields.io/travis/agodbehere/gitrn.svg
+        :target: https://travis-ci.org/agodbehere/gitrn
 
-.. image:: https://readthedocs.org/projects/with-venv/badge/?version=latest
-        :target: https://readthedocs.org/projects/with-venv/?badge=latest
+.. image:: https://readthedocs.org/projects/gitrn/badge/?version=latest
+        :target: https://readthedocs.org/projects/gitrn/?badge=latest
         :alt: Documentation Status
 
 
