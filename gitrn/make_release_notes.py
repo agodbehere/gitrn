@@ -78,14 +78,22 @@ def get_contributors(repo):
     """
     pass
 
-def parse_commits(repo, r):
+
+def parse_commits(repo, r, left_only=False):
     label_finder = re.compile(r'({})\b'.format('|'.join(l for l in LABELS)), re.IGNORECASE)
-    tag = r.split('..')[1]
-    if tag == "HEAD":
-        tag = "UNRELEASED"
+    try:
+        tag = r.split('..')[1]
+    except IndexError:
+        tag = r
+    else:
+        if tag == "HEAD":
+            tag = "UNRELEASED"
     release_note = {'tag': tag, 'general': []}
     release_note.update({k: [] for k in LABELS})
-    rawdata = repo.git.log(r, pretty="format:%s", no_decorate=True, left_right=True)
+    if left_only:
+        rawdata = repo.git.log(r, pretty="format:%s", no_decorate=True, left_only=True)
+    else:
+        rawdata = repo.git.log(r, pretty="format:%s", no_decorate=True, left_right=True)
     for line in rawdata.splitlines():
         labels = set(label_finder.findall(line)) & LABELS
         if '#minor' in labels or '#ignore' in labels:
@@ -103,12 +111,14 @@ def group_by_tag(repo):
     ranges = get_tag_ranges(repo)
     print("RANGES: {}".format(ranges))
     latest_tag = ranges[0].split('..')[1]
+    first_tag = ranges[-1].split('..')[0]
     #ranges = [latest_tag + '..HEAD'] + ranges
     release_notes = []
     for r in ranges:
         release_notes.append(parse_commits(repo, r))
         # for rn in release_notes:
         #    print(rn)
+    release_notes.append(parse_commits(repo, first_tag, left_only=True))  # one-sided inclusion
     return release_notes
 
 def group_by_contributor(repo):
