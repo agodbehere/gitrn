@@ -148,7 +148,8 @@ def run():
     elif args.date is not None:
         release_notes = []
     else:
-        release_notes = []
+        # DEFAULT ACTION HERE
+        release_notes = group_by_tag(repo)
 
     if args.console:
         print(format_markdown(release_notes))
