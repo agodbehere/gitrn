@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+from __future__ import print_function
+import sys, re
+
+# Collect the parameters
+commit_msg_filepath = sys.argv[1]
+
+# LABELS are from make_release_notes.py... should refactor.
+LABELS = {'#new', '#change', '#bug', '#test', '#doc', '#depr', '#minor', '#ignore'}
+
+with open(commit_msg_filepath) as f:
+    content = f.read()
+    label_finder = re.compile(r'({})\b'.format('|'.join(l for l in LABELS)), re.IGNORECASE)
+    found_labels = label_finder.findall(content)
+    if not found_labels:
+        print("commit-msg: ERROR! Please include at least one label: {}".format(LABELS))
+        sys.exit(1)
