@@ -49,9 +49,10 @@ def format_markdown(report):
             mdtext += '\n'.join(["    * {}".format(s) for s in note['#depr']])
             mdtext += '\n\n'
 
-        mdtext += "## GENERAL\n"
-        mdtext += '\n'.join(["    * {}".format(s) for s in note['general']])
-        mdtext += "\n\n-----\n\n"
+        if note['general']:
+            mdtext += "## GENERAL\n"
+            mdtext += '\n'.join(["    * {}".format(s) for s in note['general']])
+            mdtext += "\n\n-----\n\n"
     return mdtext
 
 
