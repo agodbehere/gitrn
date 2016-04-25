@@ -107,13 +107,15 @@ def parse_commits(repo, r, left_only=False):
                 release_note[l].append(updated_line)
     return release_note
 
+
 def group_by_tag(repo):
     ranges = get_tag_ranges(repo)
-    print("RANGES: {}".format(ranges))
-    latest_tag = ranges[0].split('..')[1]
+    #print("RANGES: {}".format(ranges))
+    # latest_tag = ranges[0].split('..')[1]
     first_tag = ranges[-1].split('..')[0]
     #ranges = [latest_tag + '..HEAD'] + ranges
     release_notes = []
+
     for r in ranges:
         release_notes.append(parse_commits(repo, r))
         # for rn in release_notes:
